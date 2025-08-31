@@ -48,5 +48,16 @@ services:
       db:
         condition: service_healthy
 
+  backup:
+    container_name: maplab_urban_backup
+    build: ./backup
+    env_file:
+      - ./.env
+    volumes:
+      - ./backups:/backups
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   postgres_data:
