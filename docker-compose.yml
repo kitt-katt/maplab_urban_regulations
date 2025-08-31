@@ -34,15 +34,19 @@ services:
   app:
     container_name: maplab_urban_app
     build: ./app
-
     volumes:
       - ./app:/app
     ports:
       - "127.0.0.1:6013:8000"
     env_file:
       - ./.env
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 volumes:
   postgres_data:
